@@ -1,9 +1,15 @@
 #ifndef __LOCAL_DEFAULT_H__
 #define __LOCAL_DEFAULT_H__
 
+#include "CommonHead.h"
+
 #include "XML/XML.h"
 
+#ifdef RunningInServer
+#include "Common/Data_.h"
+#else
 #include "cocos2d.h"
+#endif
 
 #define GetIntFromXML		LocalDefault::getInstance()->getIntegerForKeyValue
 #define SetIntToXML			LocalDefault::getInstance()->setIntegerForKeyValue
@@ -37,15 +43,24 @@ public:
 	float	getFloatForKeyValue(const std::string nKey);											//读float值
 	double	getDoubleForKeyValue(const std::string nKey);											//读float值
 	std::string	getStringForKeyValue(const std::string nKey);                                        //读string值
-	cocos2d::Data	getDataForKeyValue(const char* pKey);
 
+
+#ifdef RunningInServer
+	Data_	getDataForKeyValue(const char* pKey);
+#else
+	cocos2d::Data	getDataForKeyValue(const char* pKey);
+#endif
 	void	setBoolForKeyValue(const std::string nKey, bool value);								//写bool值
 	void	setIntegerForKeyValue(const std::string nKey, int value);							//写int值
 	void	setFloatForKeyValue(const std::string nKey, float value);							//写float值
 	void	setDoubleForKeyValue(const std::string nKey, double value);							//写double值
 	void	setStringForKeyValue(const std::string nKey, const std::string& value);				//写string值
-	void	setDataForKeyValue(const char* pKey, const cocos2d::Data& value) ;
 
+#ifdef RunningInServer
+	void	setDataForKeyValue(const char* pKey, const Data_& value) ;
+#else
+	void	setDataForKeyValue(const char* pKey, const cocos2d::Data& value) ;
+#endif
 	virtual ENCRYPT_TYPE getEncryption(void) const { return _mIsEn; }
 	virtual void setEncryption(ENCRYPT_TYPE var){ _mIsEn = var; }
 

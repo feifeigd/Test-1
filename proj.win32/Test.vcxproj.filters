@@ -109,6 +109,9 @@
     <Filter Include="Classes\Tool\UTFGBK">
       <UniqueIdentifier>{083329da-2280-4e76-b087-ac79c2701028}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Tool\Common">
+      <UniqueIdentifier>{370a5c7c-15a7-4e87-8142-af064602540b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -314,6 +317,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Tool\UTFGBK\UtfGbk.cpp">
       <Filter>Classes\Tool\UTFGBK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tool\Common\Data_.cpp">
+      <Filter>Classes\Tool\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tool\Common\Value_.cpp">
+      <Filter>Classes\Tool\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tool\Lua\LuaStack_.cpp">
+      <Filter>Classes\Tool\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,6 +853,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Tool\UTFGBK\UtfGbk.h">
       <Filter>Classes\Tool\UTFGBK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tool\Common\Data_.h">
+      <Filter>Classes\Tool\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tool\Common\Value_.h">
+      <Filter>Classes\Tool\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tool\CommonHead.h">
+      <Filter>Classes\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tool\Lua\LuaStack_.h">
+      <Filter>Classes\Tool\Lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

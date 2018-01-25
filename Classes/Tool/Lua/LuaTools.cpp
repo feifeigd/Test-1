@@ -1,6 +1,5 @@
 #include "LuaTools.h"
 
-USING_NS_CC;
 
 void LuaTools::pushClass(lua_State* l, void* p, const char* className)
 {

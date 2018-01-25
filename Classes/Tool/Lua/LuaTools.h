@@ -1,25 +1,36 @@
 #ifndef _LUA_TOOLS_
 #define _LUA_TOOLS_
 
-//extern "C"
-//{
-//#include "luajit/lua.h"
-//#include "luajit/lauxlib.h"
-//#include "luajit/lualib.h"
-//}
 
-#include <set>
+#include "CommonHead.h"
+
+#ifdef RunningInServer
+#include "LuaStack_.h"
+#else
+#include "cocos2d.h"
 #include "CCLuaEngine.h"
+#endif
 
-
+#ifdef RunningInServer
+extern "C"
+{
+#include "luajit/lua.h"
+#include "luajit/lauxlib.h"
+#include "luajit/lualib.h"
+}
+#endif
 
 namespace LuaTools
 {
     template<typename T>
     void pushMapKeys(std::map<int, T>& m)
     {
-		auto luaState = cocos2d::LuaEngine::getInstance()->getLuaStack();
-
+		
+#ifdef RunningInServer
+		lua_State* luaState = LuaStack_::getInstance()->getLuaState();
+#else
+		lua_State* luaState = cocos2d::LuaEngine::getInstance()->getLuaStack();
+#endif
         lua_newtable(luaState);
         // table 的下标需从1开始
         int index = 1;

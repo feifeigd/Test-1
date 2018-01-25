@@ -1,7 +1,7 @@
 #include "LuaRegiest.h"
 #include "LuaTools.h"
-#include "cocos2d.h"
-#include "CCLuaEngine.h"
+
+
 
 int LogPrint(lua_State * luastate)
 {

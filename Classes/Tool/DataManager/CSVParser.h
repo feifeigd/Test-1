@@ -1,10 +1,7 @@
 #ifndef CSVParser_h__
 #define CSVParser_h__
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include "CommonHead.h"
 
 
 void csvline_populate(std::vector<std::string> &record, const std::string& line, char delimiter);

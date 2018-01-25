@@ -178,6 +178,8 @@ REM xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y   </Command>
     <ClCompile Include="..\Classes\ServerFrame\log\LogManager.cpp" />
     <ClCompile Include="..\Classes\ServerFrame\server\KxBaseServer.cpp" />
     <ClCompile Include="..\Classes\ServerFrame\server\ServerConfig.cpp" />
+    <ClCompile Include="..\Classes\Tool\Common\Data_.cpp" />
+    <ClCompile Include="..\Classes\Tool\Common\Value_.cpp" />
     <ClCompile Include="..\Classes\Tool\DataManager\DataManager.cpp" />
     <ClCompile Include="..\Classes\Tool\DataManager\DataTable.cpp" />
     <ClCompile Include="..\Classes\Tool\DBDriver\DBManager.cpp" />
@@ -192,6 +194,7 @@ REM xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y   </Command>
     <ClCompile Include="..\Classes\Tool\LocalDefault\base64_.cpp" />
     <ClCompile Include="..\Classes\Tool\LocalDefault\LocalDefault.cpp" />
     <ClCompile Include="..\Classes\Tool\Lua\LuaRegiest.cpp" />
+    <ClCompile Include="..\Classes\Tool\Lua\LuaStack_.cpp" />
     <ClCompile Include="..\Classes\Tool\Lua\LuaTools.cpp" />
     <ClCompile Include="..\Classes\Tool\MD5\MD5.cpp" />
     <ClCompile Include="..\Classes\Tool\MyJson\json\json_reader.cpp" />
@@ -260,6 +263,9 @@ REM xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y   </Command>
     <ClInclude Include="..\Classes\ServerFrame\server\KxBaseServer.h" />
     <ClInclude Include="..\Classes\ServerFrame\server\Protocol.h" />
     <ClInclude Include="..\Classes\ServerFrame\server\ServerConfig.h" />
+    <ClInclude Include="..\Classes\Tool\CommonHead.h" />
+    <ClInclude Include="..\Classes\Tool\Common\Data_.h" />
+    <ClInclude Include="..\Classes\Tool\Common\Value_.h" />
     <ClInclude Include="..\Classes\Tool\DataManager\CSVParser.h" />
     <ClInclude Include="..\Classes\Tool\DataManager\DataManager.h" />
     <ClInclude Include="..\Classes\Tool\DataManager\DataTable.h" />
@@ -353,6 +359,7 @@ REM xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y   </Command>
     <ClInclude Include="..\Classes\Tool\Lua\luajit\luaconf.h" />
     <ClInclude Include="..\Classes\Tool\Lua\luajit\lualib.h" />
     <ClInclude Include="..\Classes\Tool\Lua\LuaRegiest.h" />
+    <ClInclude Include="..\Classes\Tool\Lua\LuaStack_.h" />
     <ClInclude Include="..\Classes\Tool\Lua\LuaTools.h" />
     <ClInclude Include="..\Classes\Tool\MD5\MD5.h" />
     <ClInclude Include="..\Classes\Tool\MD5\MD5Def.h" />

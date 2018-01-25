@@ -1,10 +1,10 @@
 #ifndef DataTable_h__
 #define DataTable_h__
 
-#include <vector>
-#include <map>
 #include "Tea/TEACrypt.h"
-
+#ifdef RunningInServer
+#include "Common/Data_.h"
+#endif
 
 class RowData;
 
@@ -46,6 +46,10 @@ private:
 
 	//È¥µô×Ö·û´®Ê×Î²¿Õ¸ñ
 	std::string& strim(std::string &s);
+
+#ifdef RunningInServer
+	Data_ getStringFromFile(const std::string &path);
+#endif
 
 private:
 

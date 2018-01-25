@@ -1,6 +1,9 @@
 #ifndef __TEACRYPT_H__
 #define __TEACRYPT_H__
 
+
+#include "CommonHead.h"
+
 typedef unsigned int	UnInt32_t;
 
 /*

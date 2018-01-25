@@ -139,7 +139,7 @@ GameUser *CGameUserManager::newGameUser(int uid, int accountId)
 	// 用户信息模型初始化
 	char name[32] = {};
 
-	std::string randName = "DefaultName-" + to_string(uid);
+	std::string randName = "DefaultName-" + std::to_string(uid);
 	sprintf_s(name, "%s", randName);
 	pGameUser->setUserName(name);
 

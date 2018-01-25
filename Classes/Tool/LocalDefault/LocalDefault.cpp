@@ -1,6 +1,10 @@
 #include "LocalDefault.h"
 #include "StringFormat/StringFormat.h"
-//#include "base64_.h"
+
+#ifdef RunningInServer
+#include "LocalDefault/base64_.h"
+#endif
+
 
 
 #define ENCRYPT_KEY_LENGTH 1
@@ -89,7 +93,26 @@ void LocalDefault::setDoubleForKeyValue(const std::string nKey, double value)
 	std::string Value = EncryptData(szValue);
 	setValueForKey(Key.c_str(), Value.c_str());
 }
+#ifdef RunningInServer
+void LocalDefault::setDataForKeyValue(const char* nKey, const Data_& value)
+{
+	if (!nKey || strlen(nKey) <= 0)
+	{
+		return;
+	}
 
+	char *encodedData = 0;
+
+	base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
+	std::string Key = EncryptData(nKey);
+	setValueForKey(Key.c_str(), encodedData);
+
+	if (encodedData)
+	{
+		free(encodedData);
+	}
+}
+#else
 void LocalDefault::setDataForKeyValue(const char* nKey, const cocos2d::Data& value)
 {
 	if (!nKey || strlen(nKey) <= 0)
@@ -108,6 +131,7 @@ void LocalDefault::setDataForKeyValue(const char* nKey, const cocos2d::Data& val
 		free(encodedData);
 	}
 }
+#endif
 
 //¶ÁÈ¡
 int LocalDefault::getIntegerForKeyValue(const std::string nKey)
@@ -153,6 +177,25 @@ double LocalDefault::getDoubleForKeyValue(const std::string nKey)
 	return (parseKey.length() != 0 ? StringFormat::toNum<double>(parseKey) : 0);
 }
 
+#ifdef RunningInServer
+Data_ LocalDefault::getDataForKeyValue(const char* nKey)
+{
+	std::string Key = EncryptData(nKey);
+	std::string result = getValueForKey(Key.c_str());
+
+	Data_ ret = Data_::Null;
+
+	if (result.c_str())
+	{
+		unsigned char * decodedData = nullptr;
+		int decodedDataLen = base64Decode((unsigned char*)result.c_str(), (unsigned int)strlen(result.c_str()), &decodedData);
+		if (decodedData) {
+			ret.fastSet(decodedData, decodedDataLen);
+		}
+	}
+	return ret;
+}
+#else
 cocos2d::Data LocalDefault::getDataForKeyValue(const char* nKey)
 {
 	std::string Key = EncryptData(nKey);
@@ -170,6 +213,8 @@ cocos2d::Data LocalDefault::getDataForKeyValue(const char* nKey)
 	}
 	return ret;
 }
+#endif
+
 
 std::string LocalDefault::getValueForKey(const char* pKey)
 {
@@ -339,7 +384,11 @@ void LocalDefault::initXMLFilePath()
 {
     if (! _isFilePathInitialized)
     {
-        _filePath += cocos2d::FileUtils::getInstance()->getWritablePath() + XML_FILE_NAME;
+#ifdef RunningInServer
+		_filePath +=  XML_FILE_NAME;
+#else
+		_filePath += cocos2d::FileUtils::getInstance()->getWritablePath() + XML_FILE_NAME;
+#endif
         _isFilePathInitialized = true;
     }    
 }

@@ -1,8 +1,7 @@
 #ifndef _XML_H__
 #define _XML_H__
 
-#include <vector>
-#include <map>
+#include "CommonHead.h"
 
 #ifdef _DEBUG
 #define _DS(i) (i?&(m_strDoc.c_str())[m_aPos[i].nStartL]:0)

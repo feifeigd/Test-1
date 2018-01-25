@@ -2,7 +2,11 @@
 #define _MY_JSON_H__
 #include <string>
 #include "json/json.h"
+
+#define RunningInServer
+#ifndef RunningInServer
 #include "cocos2d.h"
+#endif
 /*
 1:在jsoncpp库的基础上封装了一层自己习惯的api
 

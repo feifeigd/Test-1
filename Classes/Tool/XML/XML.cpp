@@ -1,7 +1,11 @@
 #include "XML.h"
 #include <string>
 
+
+#ifndef RunningInServer
 #include "cocos2d.h"
+#endif
+
 using namespace std;
 
 //[CMARKUPDEV
@@ -79,11 +83,45 @@ bool XML::IsWellFormed()
 	return false;
 }
 
+std::string getStringFromFile(const std::string &path)
+{
+	//FILE *fp = fopen(path.c_str(), "rb");
+	FILE *fp = fopen(path.c_str(), "rt");
+	if (NULL == fp)
+	{
+		return "";
+	}
+
+	char* buffer = NULL;
+	int size = 0;
+	int readsize = 0;
+
+	fseek(fp, 0, SEEK_END);
+	size = ftell(fp) + 1;
+	fseek(fp, 0, SEEK_SET);
+
+	buffer = (char*)malloc(size);
+	memset(buffer, 0, size);
+
+	readsize = fread(buffer, sizeof(unsigned char), size, fp);
+	fclose(fp);
+
+	std::string ret(buffer, readsize);
+	free(buffer);
+	return ret;
+}
+
 bool XML::Load( const char* szFileName )
 {
 	// Load document from file
 	bool bResult = false;
+	
+#ifdef RunningInServer
+	std::string filePath = getStringFromFile(szFileName);
+#else
 	std::string filePath = cocos2d::FileUtils::getInstance()->fullPathForFilename(szFileName);
+#endif
+
 	FILE* fp = fopen(filePath.c_str(), "rb");
 	if ( fp )
 	{

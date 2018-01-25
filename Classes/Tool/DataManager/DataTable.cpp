@@ -1,4 +1,3 @@
-#include <iostream>
 #include "DataTable.h"
 #include "CSVParser.h"
 #include "StringFormat/StringFormat.h"
@@ -6,8 +5,6 @@
 #ifndef RunningInServer
 	#include "cocos2d.h"
 #endif
-
-//using namespace std;
 
 
 DataTable::DataTable()
@@ -27,6 +24,36 @@ void DataTable::init(const char* tableName, TEACrypt* tea)
 	mTea = tea;
 }
 
+#ifdef RunningInServer
+Data_ DataTable::getStringFromFile(const std::string &path)
+{
+	Data_ data;
+
+	//FILE *fp = fopen(path.c_str(), "rb");
+	FILE *fp = fopen(path.c_str(), "rt");
+	if (NULL == fp)
+	{
+		return data;
+	}
+
+	int size = 0;
+	int readsize = 0;
+
+	
+
+	fseek(fp, 0, SEEK_END);
+	size = ftell(fp) + 1;
+	fseek(fp, 0, SEEK_SET);
+
+	data.setSize(size);
+	readsize = fread(data.getBytes(), sizeof(unsigned char), size, fp);
+	fclose(fp);
+	data.setSize(readsize);
+
+	return data;
+}
+#endif
+
 void DataTable::loadFile()
 {
 	//判定数据表是否已加载
@@ -37,7 +64,6 @@ void DataTable::loadFile()
 
 	//读取二进制文件
 
-
 	std::istringstream iss;
 
 	std::vector<std::string> strSplit;
@@ -45,7 +71,13 @@ void DataTable::loadFile()
 	if (strSplit.at(1).size() > 0 && strSplit.at(1) == "csv")
 	{
 		std::string path = "DataCsv/" + mTableName;
+
+#ifndef RunningInServer
 		cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(path);
+#else
+		Data_ data =  getStringFromFile(path);
+#endif
+		
 		const char *buffer = (char*)data.getBytes();
 
 		iss.str(buffer);
@@ -53,7 +85,12 @@ void DataTable::loadFile()
 	else
 	{
 		std::string path = "Data/" + mTableName;
+#ifndef RunningInServer
 		cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(path);
+#else
+		Data_ data = getStringFromFile(path);
+#endif
+	
 		if (data.isNull())
 		{
 			printf("!!error, data null");
