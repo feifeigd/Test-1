@@ -1,0 +1,4 @@
+
+*.svn/
+*cocos2d/
+*proj.win32/
