@@ -39,8 +39,6 @@ Data_ DataTable::getStringFromFile(const std::string &path)
 	int size = 0;
 	int readsize = 0;
 
-	
-
 	fseek(fp, 0, SEEK_END);
 	size = ftell(fp) + 1;
 	fseek(fp, 0, SEEK_SET);
@@ -70,7 +68,7 @@ void DataTable::loadFile()
 	StringFormat::split(strSplit, mTableName, ".");
 	if (strSplit.at(1).size() > 0 && strSplit.at(1) == "csv")
 	{
-		std::string path = "DataCsv/" + mTableName;
+		std::string path = "..Resources/DataCsv/" + mTableName;
 
 #ifndef RunningInServer
 		cocos2d::Data data = cocos2d::FileUtils::getInstance()->getDataFromFile(path);

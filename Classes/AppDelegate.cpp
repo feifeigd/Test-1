@@ -103,9 +103,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//bin
 	cocos2d::FileUtils::getInstance()->addSearchPath("../Resources");
 	FileUtils::getInstance()->addSearchPath("../Resources/scripts");
+	FileUtils::getInstance()->addSearchPath("../Resources/DataCsv");
 	//debug
 	FileUtils::getInstance()->addSearchPath("../../Resources");
 	FileUtils::getInstance()->addSearchPath("../../Resources/scripts");
+	FileUtils::getInstance()->addSearchPath("../../Resources/DataCsv");
 #endif
 
 	// 初始化脚本引擎

@@ -117,12 +117,13 @@ bool XML::Load( const char* szFileName )
 	bool bResult = false;
 	
 #ifdef RunningInServer
-	std::string filePath = getStringFromFile(szFileName);
+	//std::string filePath = getStringFromFile(szFileName);
+	FILE* fp = fopen(szFileName, "rb");
 #else
 	std::string filePath = cocos2d::FileUtils::getInstance()->fullPathForFilename(szFileName);
-#endif
-
 	FILE* fp = fopen(filePath.c_str(), "rb");
+#endif
+	
 	if ( fp )
 	{
 		// Determine file length

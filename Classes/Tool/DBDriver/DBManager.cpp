@@ -46,7 +46,6 @@ void DBManager::destroy()
 
 bool DBManager::InitWithXML(std::string xmlFile)
 {
-	
 	XML conf;
 	if (conf.Load(xmlFile.c_str()))
 	{
@@ -92,7 +91,6 @@ bool DBManager::InitWithXML(std::string xmlFile)
 					InsertStorer(rule);
 					printf("insert redis storer storageId=%d", rule.db_id);
 				}
-
 			}
 			else if (dbtype == "mysql")
 			{
@@ -131,7 +129,6 @@ bool DBManager::InitWithXML(std::string xmlFile)
 					InsertStorer(rule);
 					printf("insert mysql storer storageId=%d", rule.db_id);
 				}
-
 			}
 			else if (dbtype == "tmem")
 			{
@@ -144,7 +141,6 @@ bool DBManager::InitWithXML(std::string xmlFile)
 		}
 		return true;
 	}
-	
 	return false;
 }
 
