@@ -40,7 +40,7 @@ void LuaStack_::destroy()
 }
 
 #ifdef RunningInServer
-Data_ LuaStack_::getStringFromFile(const std::string &path)
+Data_ LuaStack_::getDataFromFile(const std::string &path)
 {
 	Data_ data;
 
@@ -54,8 +54,6 @@ Data_ LuaStack_::getStringFromFile(const std::string &path)
 	int size = 0;
 	int readsize = 0;
 
-
-
 	fseek(fp, 0, SEEK_END);
 	size = ftell(fp) + 1;
 	fseek(fp, 0, SEEK_SET);
@@ -66,6 +64,33 @@ Data_ LuaStack_::getStringFromFile(const std::string &path)
 	data.setSize(readsize);
 
 	return data;
+}
+
+std::string LuaStack_::getStringFromFile(const std::string &path)
+{
+	FILE *fp = fopen(path.c_str(), "rt");
+	if (NULL == fp)
+	{
+		return "";
+	}
+
+	char* buffer = NULL;
+	int size = 0;
+	int readsize = 0;
+
+	fseek(fp, 0, SEEK_END);
+	size = ftell(fp) + 1;
+	fseek(fp, 0, SEEK_SET);
+
+	buffer = (char*)malloc(size);
+	memset(buffer, 0, size);
+
+	readsize = fread(buffer, sizeof(unsigned char), size, fp);
+	fclose(fp);
+
+	std::string ret(buffer, readsize);
+	free(buffer);
+	return ret;
 }
 #endif
 
@@ -94,7 +119,7 @@ int LuaStack_::executeScriptFile(const char* filename)
 #ifndef RunningInServer
 	if (FileUtils::getInstance()->isFileExist(tmpfilename))
 #else
-	if (false)
+	if (true)
 #endif
 	{
 		buf = tmpfilename;
@@ -117,11 +142,6 @@ int LuaStack_::executeScriptFile(const char* filename)
 #ifndef RunningInServer
 	fullPath = FileUtils::getInstance()->fullPathForFilename(buf);
 	cocos2d::Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-#else
-	fullPath = buf;
-	Data_ data = getStringFromFile(buf);
-#endif
-
 	int rn = 0;
 	if (!data.isNull())
 	{
@@ -131,6 +151,20 @@ int LuaStack_::executeScriptFile(const char* filename)
 		}
 	}
 	return rn;
+#else
+	fullPath = buf;
+	std::string& data = getStringFromFile(fullPath);
+	int rn = 0;
+	if (!data.size() == 0)
+	{
+		if (luaLoadBuffer(_state, (const char*)data.c_str(), (int)data.size(), fullPath.c_str()) == 0)
+		{
+			rn = executeFunction(0);
+		}
+	}
+	return rn;
+#endif
+
 }
 
 int LuaStack_::executeGlobalFunction(const char* functionName)

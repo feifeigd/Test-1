@@ -37,7 +37,8 @@ public:
 	int executeString(const char *codes);
 	void addSearchPath(const char* path);
 #ifdef RunningInServer
-	Data_ getStringFromFile(const std::string &path);
+	Data_ getDataFromFile(const std::string &path);
+	std::string getStringFromFile(const std::string &path);
 #endif
 
 

@@ -1,7 +1,12 @@
 #include "LuaRegiest.h"
 #include "LuaTools.h"
 
-
+#ifdef RunningInServer
+#include "log/LogManager.h"
+#include "LuaStack_.h"
+#else
+#include "CCLuaEngine.h"
+#endif
 
 int LogPrint(lua_State * luastate)
 {
@@ -40,8 +45,12 @@ int LogPrint(lua_State * luastate)
 		if (i != nargs)
 			t += "  ";
 	}
-
+#ifdef KX_LOGDEBUG
+	KX_LOGDEBUG("[LUA-print] %s", t.c_str());
+#else
 	printf("[LUA-print] %s", t.c_str());
+#endif // KX_LOGDEBUG
+
 	return 0;
 }
 
@@ -55,10 +64,13 @@ int luaTest(lua_State * luastate)
 
 bool regiestLuaFunction()
 {
-	//lua_State* luaState = cocos2d::LuaEngine::getInstance()->getLuaStack()->getLuaState();
-  
-	//lua_register(luaState, "print", LogPrint);
-	//lua_register(luaState, "luaTest", luaTest);
+#ifndef RunningInServer
+	lua_State* luaState = cocos2d::LuaEngine::getInstance()->getLuaStack()->getLuaState();
+#else
+	lua_State* luaState = LuaStack_::getInstance()->getLuaState();
+#endif
+	lua_register(luaState, "print", LogPrint);
+	lua_register(luaState, "luaTest", luaTest);
     return true;
 }
 

@@ -98,10 +98,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//ios
 	FileUtils::getInstance()->addSearchPath("Resources");
 	FileUtils::getInstance()->addSearchPath("Resources/scripts");
+	FileUtils::getInstance()->addSearchPath("Resources/DataCsv");
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	//bin
-	cocos2d::FileUtils::getInstance()->addSearchPath("../Resources");
+	FileUtils::getInstance()->addSearchPath("../Resources");
 	FileUtils::getInstance()->addSearchPath("../Resources/scripts");
 	FileUtils::getInstance()->addSearchPath("../Resources/DataCsv");
 	//debug
@@ -119,8 +120,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	lua_State* L = engine->getLuaStack()->getLuaState();
     register_all_packages(L);
 
-	Node* gameNode = reinterpret_cast<Node*>(GameNetworkNode::getInstance());
-	//CGameNetworkNode* gameNode = CGameNetworkNode::getInstance();
+	//Node* gameNode = reinterpret_cast<Node*>(GameNetworkNode::getInstance());
+	GameNetworkNode* gameNode = GameNetworkNode::getInstance();
 	director->setNotificationNode(gameNode);
 
     // create a scene. it's an autorelease object
