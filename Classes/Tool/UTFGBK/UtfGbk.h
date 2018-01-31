@@ -2,6 +2,7 @@
 #define Common_h__
 #include <string>
 
+#pragma comment(lib,"libiconv.lib")
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define STR_UTF8(str) CommonTool::getInstance()->GBKToUTF8(str)

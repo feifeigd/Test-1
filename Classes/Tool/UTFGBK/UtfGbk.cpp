@@ -1,9 +1,9 @@
 ﻿#include "UtfGbk.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 #include "iconv.h"
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 #include <Windows.h>
 #endif //
 

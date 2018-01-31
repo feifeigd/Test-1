@@ -4,7 +4,7 @@
 #include "ByteBuffer.h"
 #include "message.h"
 #include <queue>
-
+#pragma comment(lib,"pthreadVCE2.lib")
 #ifdef _WIN32
 #include <Winsock2.h>
 #include <Wininet.h>

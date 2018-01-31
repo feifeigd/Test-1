@@ -233,7 +233,7 @@ int TimeManager::overDay(time_t prev, DayTime &dayTime)
 	tm *pPrevTm = localtime(&prev);
 	tm *pNowTm = localtime(&now);
 	int times = 0;
-	int d = now - prev;
+	time_t d = now - prev;
 	// 先算到指定时间需要的秒数
 	int seconds = 0;
 	if (pPrevTm->tm_hour <= dayTime.hour)
@@ -263,7 +263,7 @@ int TimeManager::overWeek(time_t prev, WeekTime &weekTime)
 	tm *pPrevTm = localtime(&prev);
 	tm *pNowTm = localtime(&now);
 	int times = 0;
-	int d = now - prev;
+	time_t d = now - prev;
 
 	int seconds = 0;
 	if (pPrevTm->tm_wday <= weekTime.weekDay)
@@ -291,28 +291,28 @@ int TimeManager::overWeek(time_t prev, WeekTime &weekTime)
 int TimeManager::overSecond(time_t prev, int second)
 {
 	time_t now = time(NULL);
-	int d = now - prev;
+	time_t d = now - prev;
 	return static_cast<int>(d/second);
 }
 
 int TimeManager::getTimesBySecond(time_t lastTime, time_t now, int interval)
 {
-    return (now - lastTime) / interval;
+    return (int)((now - lastTime) / interval);
 }
 
 int TimeManager::getTimesByDay(time_t lastTime, time_t now)
 {
-    return (now - lastTime) / DAYSECONDS;
+	return (int)((now - lastTime) / DAYSECONDS);
 }
 
 int TimeManager::getTimesByWeek(time_t lastTime, time_t now)
 {
-    return (now - lastTime) / WEEKSECONDS;
+	return (int)((now - lastTime) / WEEKSECONDS);
 }
 
 int TimeManager::getSecondToNextSecond(time_t lastTime, int target)
 {
-    return target - lastTime;
+	return (int)(target - lastTime);
 }
 
 int TimeManager::getSecondToNextDay(time_t now, int hour, int min, int second)

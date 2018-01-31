@@ -1,6 +1,6 @@
 #ifndef _DB_STORER_H_
 #define _DB_STORER_H_
-
+#pragma comment(lib,"libmysql.lib")
 #include <string>
 #include "mysqld/mysql.h"
 #include "IStorer.h"

@@ -234,7 +234,7 @@ int redisContextConnectTcp(redisContext *c, const char *addr, int port, struct t
     struct sockaddr_in sa;
 #ifdef HIREDIS_WIN
     int ssa = sizeof(sa);
-    char buf[255];
+	char buf[255];
     snprintf(buf, 255, "%s:%d", addr, port);
 #endif
     
@@ -246,7 +246,7 @@ int redisContextConnectTcp(redisContext *c, const char *addr, int port, struct t
     sa.sin_family = AF_INET;
     sa.sin_port = htons(port);
 #ifdef HIREDIS_WIN
-    if (WSAStringToAddress((LPWSTR)buf, AF_INET, NULL, (LPSOCKADDR)&sa, &ssa) == 0) {
+	if (WSAStringToAddress(buf, AF_INET, NULL, (LPSOCKADDR)&sa, &ssa) == 0) {
 #else
     if (inet_pton(AF_INET, addr, &sa.sin_addr) == 0) {
 #endif      
