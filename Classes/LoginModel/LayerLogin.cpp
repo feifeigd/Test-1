@@ -1,14 +1,17 @@
 ﻿#include "LayerLogin.h"
 #include "LoginController.h"
+#include "LoginModel.h"
 
 USING_NS_CC;
 
 LayerLogin::LayerLogin()
 {
+	LoginModel::getInstance()->addObserver(this);
 }
 
 LayerLogin::~LayerLogin()
 {
+	LoginModel::getInstance()->removeObserver(this);
 }
 bool LayerLogin::init()
 {
@@ -127,13 +130,24 @@ void LayerLogin::onExit()
 	Layer::onExit();
 }
 
-void LayerLogin::onRecvLoginData( int nResult, const char* szMsg )
+
+void LayerLogin::updateSelf(void * data)
 {
-	switch (nResult)
+	ObserverParam* param = (ObserverParam*)data;
+
+	switch (param->id)
 	{
-	case 1:
+		case LOGIN_MODEL::CMD_LOGIN:
+		{
+			onRecvLoginData((const char*)param->updateData);
+		}
 		break;
-	default:	
-		break;
+		default:
+			break;
 	}
+}
+
+void LayerLogin::onRecvLoginData(const char* szMsg)
+{
+	KX_LOGDEBUG("登录成功!");
 }

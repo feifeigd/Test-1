@@ -30,24 +30,16 @@ void LoginModel::destroyInstance()
 	}
 }
 
-void LoginModel::updateNotify()
-{
-	
-	// 更新至UI;
-	// 只提供消息通知，具体内容由UI主动来取;
-	//ObserverParam param;
-	//param.id = OBS_PARAM_TYPE_SERVER_ZONE_LIST;
-	//int nMaxCount = m_vcServerList.rbegin()->m_nZoneIndex;
-	//param.updateData = (void*)(&nMaxCount);
-	//this->notifyObservers((void*)&param);
-}
-
-void LoginModel::processLogin( char* szData)
+void LoginModel::processLogin(int nMainCmd, int nSubCmd, char* szData)
 {
 	Head* head = reinterpret_cast<Head*>(szData);
-	int nMainCmd = head->MainCommand();
-	int nSubCmd = head->SubCommand();
-	int id = head->uid;
 
 	LOGIN_DATA* mData = reinterpret_cast<LOGIN_DATA*>(head->data());
+	
+	ObserverParam param;
+	param.id = LOGIN_MODEL::CMD_LOGIN;
+	param.self = this,
+	param.updateData = (void*)mData;
+	
+	this->notifyObservers((void*)&param);
 }

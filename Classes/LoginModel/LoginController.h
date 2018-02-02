@@ -31,7 +31,7 @@ public:
 	void startHeartbeat();
 
 	//消息接收接口
-	virtual void onRecvMessage(int nCmdID, int nSubCmd, char* szData);
+	virtual void onRecvMessage(int nMainCmd, int nSubCmd, char* szData);
 
 private:
 

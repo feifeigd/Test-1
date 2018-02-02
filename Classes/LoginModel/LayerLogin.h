@@ -2,9 +2,9 @@
 #define LayerLogin_h__
 #include <string>
 #include "cocos2d.h"
+#include "Observer/Observer.h"
 
-
-class LayerLogin: public cocos2d::Layer
+class LayerLogin: public cocos2d::Layer , Observer
 {
 public:
 	LayerLogin();
@@ -20,6 +20,7 @@ public:
 
 	virtual void onRecvLoginData(int nResult, const char* szMsg);
 
+	virtual void updateSelf(void * data);
 protected:
 	void	initUI();
 	void menuCloseCallback(Ref* pSender);

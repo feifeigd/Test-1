@@ -106,19 +106,16 @@ bool LoginController::login()
 }
 
 
-void LoginController::onRecvMessage(int nMainCmd, int nSubCmd, char* szData)
+void LoginController::onRecvMessage(int nMainCmd, int nSubCmd ,char* buffer)
 {
-	if (nMainCmd != MAIN_CMD::CMD_LOGIN_SERVER)
-	{
-		KX_LOGDEBUG("mainCmd !=  MAIN_CMD::CMD_LOGIN_SERVER");
-		return;
-	}
-	switch (nMainCmd)
+	Head* head = reinterpret_cast<Head*>(buffer);
+	char* szData = (char*)head->data();
+
+	switch (nSubCmd)
 	{
 		case LOGIN_CMD::CMD_S2C_LOGIN:
 		{
-			LoginModel::getInstance()->processLogin(szData);
-
+			LoginModel::getInstance()->processLogin(nMainCmd, nSubCmd, szData);
 			startHeartbeat();
 		}
 		break;

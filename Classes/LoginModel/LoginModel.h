@@ -6,6 +6,11 @@
 
 using namespace std;
 
+enum LOGIN_MODEL
+{
+	CMD_LOGIN = 1
+};
+
 class LoginModel : public Observable
 {
 
@@ -17,10 +22,8 @@ public:
 	static LoginModel*  getInstance();
 	static void  destroyInstance();
 
-	void updateNotify();
 
-
-	void processLogin(char* szData);
+	void processLogin(int nMainCmd, int nSubCmd, char* szData);
 
 private:
 

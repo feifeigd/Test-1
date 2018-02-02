@@ -4,6 +4,8 @@
 #include "SceneLogin.h"
 #include "CCLuaEngine.h"
 
+#include "log/LogManager.h"
+
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -110,6 +112,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	FileUtils::getInstance()->addSearchPath("../../Resources/scripts");
 	FileUtils::getInstance()->addSearchPath("../../Resources/DataCsv");
 #endif
+	//日志类
+	LogManager::getInstance()->setShowTime(true);
+	LogManager::getInstance()->setShowDate(true);
+	LogManager::getInstance()->addHandler(1, new LogConsoleHandler());
+	LogFileHandler* pFileHandle = new LogFileHandler();
+	pFileHandle->setFilePath("../bin/");
+	pFileHandle->setFileName("TestClientLog");
+	pFileHandle->setFastModel(false);
+	LogManager::getInstance()->addHandler(2, pFileHandle);
 
 	// 初始化脚本引擎
 	LuaEngine* engine = LuaEngine::getInstance();

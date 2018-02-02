@@ -12,6 +12,9 @@
 #include <map>
 #include "ILogHandler.h"
 
+#include "LogFileHandler.h"
+#include "LogConsoleHandler.h"
+
 #if (KX_TARGET_PLATFORM == KX_PLATFORM_LINUX)
 	#include<stdlib.h>
 	#include<stdio.h>
